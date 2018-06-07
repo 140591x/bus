@@ -51,18 +51,18 @@ module control_mux_n_decoder_tb();
         rst_reg <= 'b1;
         #50
         rst_reg <= 'b0;
-        master1_reg <= 'b111_000000000;
-        master2_reg <= 'b111_000000000;
+        master1_reg <= 'b111_0000000;
+        master2_reg <= 'b111_0000000;
         select_reg <= 'b1;
         #50
         select_reg <= 'b0;
-        master1_reg <= 'b110_000000100;
+        master1_reg <= 'b110_0000001;
         #50
         select_reg <= 'b1;
-        master2_reg <= 'b110_000001100;
+        master2_reg <= 'b110_0000011;
         #50
         select_reg <= 'b0;
-        master1_reg <= 'b101_000011100; 
+        master1_reg <= 'b101_0000111; 
         #50
         select_reg <= 'b1;
         master1_reg <= 'b101_0001111; 
