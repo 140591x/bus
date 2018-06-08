@@ -51,7 +51,7 @@ module control_mux_n_decoder#(
             ren_s2 <= 0;
             wen_s3 <= 0;
             ren_s3 <= 0;
-            mux_out <= master1;                    
+            mux_out<= 0;                    
         end
         else if (clk==1) 
         begin
