@@ -20,18 +20,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module control_mux_n_decoder#(
-    parameter input_data_width = 46,      //override the parameter  at instantiation as desired
+    parameter input_data_width = 47,      //override the parameter  at instantiation as desired
     parameter address_length   = 12,
-    parameter data_length      = 31
+    parameter data_length      = 32
     )
     (
-    input [input_data_width:0] master1, //from master 1 -> [9:8]-slave select bits , [7:7]-read/write
-    input [input_data_width:0] master2, //from master 2 -> [9:8]-slave select bits , [7:7]-read/write
+    input [input_data_width-1:0] master1,
+    input [input_data_width-1:0] master2, 
     input master_select, //from arbitrator
     input clk,
     input rst,
-    output reg[address_length:0] address_slave,
-    output reg[data_length:0]    data,
+    output reg[address_length-1:0] address_slave,
+    output reg[data_length-1:0]    data,
     output reg wen_s1,       //write enable to slave 1
     output reg ren_s1,       //read enable to slave 1
     output reg wen_s2,       //write enable to slave 2
@@ -39,7 +39,7 @@ module control_mux_n_decoder#(
     output reg wen_s3,       //write enable to slave 3
     output reg ren_s3        //read enable to slave 3
     );
-    reg [input_data_width:0] mux_out;
+    reg [input_data_width-1:0] mux_out;
     
     
     
@@ -61,8 +61,8 @@ module control_mux_n_decoder#(
                 mux_out <= master1;
             else                 
                 mux_out <= master2;
-            case(mux_out[input_data_width:data_length+address_length+1])
-                3'b111 :            ////// [9:8]-slave select bits [7:7]-read/write
+            case(mux_out[input_data_width-1:input_data_width-4])
+                3'b111 :            ////// {slave select bits(2),read/write bit }
                 begin
                     wen_s1 <= 1;
                     ren_s1 <= 0; 
@@ -126,8 +126,8 @@ module control_mux_n_decoder#(
                     ren_s3 <= 0;                    
                 end                                                                                                
             endcase
-            address_slave <= mux_out[(data_length+address_length):data_length+1];
-            data <= mux_out[data_length:0];
+            address_slave <= mux_out[(data_length+address_length-1):data_length];
+            data <= mux_out[data_length-1:0];
         end
     end
 endmodule
