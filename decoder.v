@@ -15,7 +15,7 @@ module decoder#(
     output HSEL_s2,
     output HSEL_s3
     );
-    assign HSEL_s1 = (HADDR_SLAVE_SEL_BITS == 2'b00 || HADDR_SLAVE_SEL_BITS == 2'b11 || HRESETn == 'b1)? 1: 0;
+    assign HSEL_s1 = (HADDR_SLAVE_SEL_BITS == 2'b00 | HADDR_SLAVE_SEL_BITS == 2'b11 | HRESETn == 'b1)? 1: 0;
     assign HSEL_s2 = (HADDR_SLAVE_SEL_BITS == 2'b01)? 1: 0;
     assign HSEL_s3 = (HADDR_SLAVE_SEL_BITS == 2'b10)? 1: 0;
     
